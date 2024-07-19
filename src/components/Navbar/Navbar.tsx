@@ -30,11 +30,13 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const navbarHandler = (item: any) => {
+
     if (item === "Home") {
       navigate("/Home");
     }
     if (item === "Product") {
-      navigate("/Product");
+    navigate("/Product")
+
     }
   };
 
@@ -50,7 +52,8 @@ const Navbar = () => {
         {navItems.map((item, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText sx={{ color: "#000" }} primary={item} />
+              
+                <ListItemText sx={{ color: "#000" }}   onClick={() => navbarHandler(item)} primary={item} />
             </ListItemButton>
           </ListItem>
         ))}

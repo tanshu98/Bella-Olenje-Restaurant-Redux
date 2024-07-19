@@ -17,20 +17,26 @@ import {
 import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import SearchIcon from "@mui/icons-material/Search";
-import { addToCartHandler, fetchProducts,  handleDecrement, handleIncrement } from "../../redux/reducers/ProductSlice";
+import { fetchProducts } from "../../redux/reducers/ProductSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import ProductBg from "../../assets/Images/HeaderBg.png";
+import { addToCart } from "../../redux/reducers/CartSlice";
 
 const Product = () => {
   // const [itemQty, setItemQty] = useState(1)
   const [openBackDrop, setOpenBackDrop] = useState(false);
+  const [displayAddToCartBtn, setDisplayAddToCartBtn] = useState(true);
   const dispatch = useDispatch<AppDispatch>();
-  const { product, isLoading, isError,itemQuantity } = useSelector(
-    (state: RootState) => state.product
+  const { items } = useSelector((state: RootState) => state.product);
+  const { cartItems, cartTotalQty, cartTotalAmount } = useSelector(
+    (state: RootState) => state.cart
   );
-  console.log(product);
-  const timePassIsLoading = true;
+
+  console.log('items', items);
+  console.log( "cartItems in Products.tsx",cartItems);
+
+  // const timePassIsLoading = true;
 
   const handleCloseBackDrop = () => {
     setOpenBackDrop((prevState) => !prevState);
@@ -44,20 +50,14 @@ const Product = () => {
     // setOpenBackDrop(true);
   }, []);
 
-  const handleMinus = (id:any) => {
-    dispatch(handleDecrement(id))
-  }
+  const handleAddToCart = (product: any) => {
+    console.log(product);
+    dispatch(addToCart(product));
+    // When user clicks on the addToCart Button..this product which we are passing as an argument here..will be added as action.payload in the cartSlice i.e basically in the state..ultimately
+    setDisplayAddToCartBtn(false);
+    console.log("click zhal kaaay--------------");
+  };
 
-  const handleAddToCart = ()=> {
-    // dispatch(addToCartHandler())
-  }
-
-  const handlePlus = (id:any) =>{
-    console.log(id, "----id");
-    
-    dispatch(handleIncrement(id))
-  }
- 
   return (
     <>
       <Navbar />
@@ -114,7 +114,7 @@ const Product = () => {
                       color: "#fff",
                       fontWeight: 700,
                       backgroundColor: "#FA4A0C",
-                      "&:hover": {backgroundColor: '#FA2A0C',color:'#fff'}
+                      "&:hover": { backgroundColor: "#FA2A0C", color: "#fff" },
                     }}
                   >
                     Search
@@ -144,8 +144,9 @@ const Product = () => {
               columnSpacing={4}
               sx={{ pt: 13, pb: 5 }}
             >
-              {product.map((prod, index) => (
+              {items.map((item: any, index: any) => (
                 <Grid
+                  key={index}
                   item
                   lg={4}
                   md={4}
@@ -155,25 +156,24 @@ const Product = () => {
                 >
                   <Paper
                     elevation={3}
-                    key={index}
                     sx={{
                       borderRadius: "20px",
                       width: "100%",
                     }}
                   >
                     <img
-                      src={prod.strMealThumb}
-                      alt={prod.strMeal}
+                      src={item.images[0]}
+                      alt={item.description}
                       height={140}
                       style={{
                         position: "relative",
-                        top: "-50px",
+                        // top: "-50px",
                         borderRadius: "50%",
                       }}
                     />
                     <Typography sx={{ fontSize: "1.3rem" }}>
-                      {prod.strMeal}
-                      {index}
+                      {item.title}
+                      {/* {index} */}
                     </Typography>
                     <Typography
                       sx={{
@@ -184,17 +184,24 @@ const Product = () => {
                         fontFamily: "Poppins",
                       }}
                     >
-                      Rs {prod.idMeal}
+                      Rs {item.price}
                     </Typography>
-                    <Box sx={{display:'flex',justifyContent:'center',alignItems:'center', gap:1,pb:2}}>
-                      <Typography>Quantity</Typography>
-                      <IconButton onClick={()=>handleMinus(index)} >-</IconButton>
-                      <Typography>{itemQuantity}</Typography>
-                      <IconButton onClick={()=> handlePlus(prod)}>+</IconButton>
-                      {/* <Button variant="contained">+</Button> */}
-                      {/* <Button sx={{ backgroundColor:'#FA4A0C',fontWeight:700}} variant="contained">Add to Cart</Button> */}
-                    </Box>
-                    <Button sx={{mt:1, mb:2, backgroundColor:'#FA4A0C',fontWeight:700}} variant="contained" >Add to Cart</Button>
+                     
+                      <Button
+                        sx={{
+                          mt: 1,
+                          mb: 2,
+                          backgroundColor: "#FA4A0C",
+                          fontWeight: 700,
+                          "&:hover": {
+                            backgroundColor: "#FA2A0C",
+                          },
+                        }}
+                        variant="contained"
+                        onClick={() => handleAddToCart(item)}
+                      >
+                        Add to Cart
+                      </Button>
                   </Paper>
                 </Grid>
               ))}

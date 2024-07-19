@@ -1,0 +1,18 @@
+// Add a backdrop..in the product component - Last madhe krru
+
+// Add Another button in search filed.. ✅
+// Add + - in the cards as buttons ✅
+// Add a Add to Cart Button   ✅ Done
+
+// Create a Cart Component..Add cart Products Ui ✅ 
+
+
+// Task to be done  - 
+
+// Product.tsx
+// Fix the product Qty 
+// Add to cart button should just redirect user to add to cart component and add the product into the cart..(Currently its adding cart in the product)
+
+// Add increment and decrement product qty functionality in the icon buttons
+
+// Add to cart click ..display + and -
