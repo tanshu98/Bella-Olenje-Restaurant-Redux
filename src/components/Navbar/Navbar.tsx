@@ -21,6 +21,8 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { AccountCircle } from "@mui/icons-material";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { RootState } from "../../redux/store/store";
+import { useSelector } from "react-redux";
 
 const navItems = ["Home", "Product", "Faq", "Contact"];
 const drawerWidth = 240;
@@ -28,6 +30,9 @@ const drawerWidth = 240;
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
+  const { cartItems, cartTotalQty, cartTotalAmount } = useSelector(
+    (state: RootState) => state.cart
+  );
 
   const navbarHandler = (item: any) => {
 
@@ -99,7 +104,7 @@ const Navbar = () => {
               sx={{ mr: 2 }}
             >
               {/* <MenuIcon sx={{ color: "#737373" }} /> */}
-              <Badge badgeContent={2} color="error">
+              <Badge badgeContent={cartItems.length} color="error" showZero>
                 <ShoppingCartIcon sx={{ color: "#737373" }} />
               </Badge>
             </IconButton>

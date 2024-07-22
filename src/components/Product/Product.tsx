@@ -60,7 +60,7 @@ const Product = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Box sx={{ backgroundColor: "#f2f2f2", minWidth: "415px" }}>
         <Box
           sx={{
