@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column", minWidth: "415px" }}>
-        <Navbar />
+        {/* <Navbar /> */}
         <Box
           sx={{
             display: "flex",

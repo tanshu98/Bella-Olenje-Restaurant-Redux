@@ -14,8 +14,10 @@ import {
 import TabContext from "@mui/lab/TabContext";
 import { TabList, TabPanel } from "@mui/lab";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const LoginSignUp = () => {
+  const navigate = useNavigate();
   const [value, setValue] = useState("1");
   const [showPassword, setShowPassword] = useState(false);
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -24,6 +26,10 @@ const LoginSignUp = () => {
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const loginHandler = ()=> {
+    navigate('/home');
+  }
   return (
     <Box sx={{ width: "100%", backgroundColor: "#e8e8e8", height: "100vh" }}>
       <Paper sx={{ height: "240px", display: "grid", placeItems: "center" }}>
@@ -128,6 +134,7 @@ const LoginSignUp = () => {
                   borderRadius: "30px",
                   "&:hover": { backgroundColor: "#FF5733", color: "#fff" },
                 }}
+                onClick={loginHandler}
               >
                 Login
               </Button>
